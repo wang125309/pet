@@ -1786,7 +1786,18 @@ require("../../bower_components/swiper/dist/js/swiper.min.js");
 require("../js/share.min.js");
 
 window.onload = function(){
+    var isself = 0;
+    
+    if(!localStorage['date']) {
+        isself = 1;
+        localStorage['date'] = new Date();
+    }
+    if(isself) {
 
+    }
+    else {
+
+    }
     w = $(window).width();
     h = $(window).height();
     $(document).on("touchmove",function(){
@@ -1810,7 +1821,6 @@ window.onload = function(){
     var clearAnimation = function(fun) {
         $(".title").hide();
         $(".sound").hide();
-        $(".sub-title").hide();
         $(".desc").hide();
         fun();
     };
@@ -1819,43 +1829,21 @@ window.onload = function(){
     };
     var page2Show = function() {
         $(".page2 .title").show();
-        $(".page2 .sub-title").show();
     };
     var page3Show = function() {
         $(".page3 .title").show();
-        $(".page3 .sub-title").show();
     };
     var page3Show = function() {
         $(".page3 .title").show();
-        $(".page3 .sub-title").show();
     };
     var page4Show = function() {
         $(".page4 .title").show();
-        $(".page4 .sub-title").show();
     };
     var page5Show = function() {
         $(".page5 .title").show();
-        $(".page5 .sub-title").show();
     };
     var page6Show = function() {
         $(".page6 .title").show();
-        $(".page6 .sub-title").show();
-    };
-    var page7Show = function() {
-        $(".page7 .title").show();
-        $(".page7 .sub-title").show();
-        $(".page7 .main").show();
-    };
-    var page8Show = function() {
-        $(".page8 .title").show();
-        $(".page8 .sub-title").show();
-        $(".page8 .main").show();
-    };
-    var page9Show = function() {
-        $(".page9 .title").show();
-        $(".page9 .sub-title").show();
-        $(".page9 .main").show();
-        $(".page9 .desc").show();
     };
     $(".page5 .avatar").on('tap',function(){
         $(".avatar-file").click();
@@ -1872,7 +1860,7 @@ window.onload = function(){
         }
     });
     $(".page5 .submit").on('tap',function(){
-        var formdata = new FormData($(".avatar-file")[0]);
+        var formdata = new FormData($("#form")[0]);
         $.ajax({
             type : "POST",
             url : "/pet/submit/",
@@ -1880,7 +1868,7 @@ window.onload = function(){
             processData : false,
             contentType : false,
             success : function(data) {
-                
+                console.log(data);   
             }
         }) 
     });

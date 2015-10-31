@@ -79,7 +79,7 @@ window.onload = function(){
         }
     });
     $(".page5 .submit").on('tap',function(){
-        var formdata = new FormData($(".avatar-file")[0]);
+        var formdata = new FormData($("#form")[0]);
         $.ajax({
             type : "POST",
             url : "/pet/submit/",
