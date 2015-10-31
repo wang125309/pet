@@ -45,7 +45,7 @@ include ./lib/header.jade
                     div.background=""
                     div.music.music-play=""
                     div.border-box
-                        form#form(method="post")
+                        form#form(method="post",role="form",enctype="multipart/form-data")
                             div.border-avatar
                                 div.avatar=""
                                     input.avatar-file(type="file",name="file",accept="image/*")
