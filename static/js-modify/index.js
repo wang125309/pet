@@ -7,19 +7,7 @@ require("./getParams.js");
 window.onload = function(){
     var isself = 0;
     user = getQueryParams("userId");
-    if (user && !localStorage['like']) {
-        $(".share .title-share").show();
-        $.get("/pet/getUserInformation/?uid="+user,function(data){
-            $(".share .border-avatar .avatar").css({"background-image":"url('"+data.avatar+"')"});
-            $(".share #desc").html(data.desc);
-            $(".share .like .count").html(data.like);
-            $(".share .rank .count").html(data.rank);
-            $(".share").show();
-        });
-    }
-    else {
-        $(".swiper-container").show();
-    }
+
     $(".like").on("tap",function(){
         flag = false;
         if (localStorage['like']) {
@@ -50,14 +38,6 @@ window.onload = function(){
             alert("您已经投过票了");
         }
     });
-    
-
-    if(isself) {
-
-    }
-    else {
-
-    }
     w = $(window).width();
     h = $(window).height();
     $(document).on("touchmove",function(){
@@ -155,22 +135,6 @@ window.onload = function(){
             "display":"none"
         });
         $(".swiper-container").show();
-    });
-    $(".share-btn").on('tap',function(){
-        $(".share-background").show(); 
-    });
-    $(".share-background").on('tap',function(){
-        $(".share-background").css("display","none");    
-    });
-    var formShow = function() {
-        $(".page9 .form").show();
-        n = Math.ceil(( Math.random() * 9 + 1 ) % 8 + 1 );
-        $(".result").css("background-image","url('/static/image/result"+n+".png')");
-        $(".result").show();
-    };
-    var shareShow = function() {
-        $(".share").show();  
-    };
     var swiper = new Swiper('.swiper-container', {
         direction:'vertical',
         speed:500,
@@ -204,4 +168,67 @@ window.onload = function(){
             }
         }
     });
+    });
+    $(".share-btn").on('tap',function(){
+        $(".share-background").show(); 
+    });
+    $(".share-background").on('tap',function(){
+        $(".share-background").css("display","none");    
+    });
+    var formShow = function() {
+        $(".page9 .form").show();
+        n = Math.ceil(( Math.random() * 9 + 1 ) % 8 + 1 );
+        $(".result").css("background-image","url('/static/image/result"+n+".png')");
+        $(".result").show();
+    };
+    var shareShow = function() {
+        $(".share").show();  
+    };
+
+    if (user && !localStorage['like']) {
+        $(".share .title-share").show();
+        $.get("/pet/getUserInformation/?uid="+user,function(data){
+            $(".share .border-avatar .avatar").css({"background-image":"url('"+data.avatar+"')"});
+            $(".share #desc").html(data.desc);
+            $(".share .like .count").html(data.like);
+            $(".share .rank .count").html(data.rank);
+            $(".share").show();
+        });
+    }
+    else {
+        $(".swiper-container").show();
+    var swiper = new Swiper('.swiper-container', {
+        direction:'vertical',
+        speed:500,
+        onInit: function() {
+            clearAnimation(page1Show);
+        },
+        onSlideChangeEnd: function(swiper){
+            if(swiper.activeIndex == 0) {
+                clearAnimation(page1Show);
+            }
+            else if(swiper.activeIndex == 1) {
+                clearAnimation(page2Show);
+            }
+            else if(swiper.activeIndex == 2) {
+                clearAnimation(page3Show);
+            }
+            else if(swiper.activeIndex == 3) {
+                clearAnimation(page4Show);
+            }
+            else if(swiper.activeIndex == 4) {
+                clearAnimation(page5Show);
+                if(localStorage['date']) {
+                    $(".share").show();
+                    $.get("/pet/getUserInformation/?date="+localStorage['date'],function(data){
+                        $(".share .border-avatar .avatar").css({"background-image":"url('"+data.avatar+"')"});
+                        $(".share #desc").html(data.desc);
+                        $(".share .like .count").html(data.like);
+                        $(".share .rank .count").html(data.rank);
+                    });
+                }
+            }
+        }
+    });
+    }
 }
