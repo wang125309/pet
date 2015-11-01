@@ -1965,7 +1965,10 @@ window.onload = function(){
     var shareShow = function() {
         $(".share").show();  
     };
+    $(".page4 .submit").on('tap',function(){
+        swiper.slideTo(4);
 
+    });
     if (user && !localStorage['like']) {
         $(".share .title-share").show();
         $.get("/pet/getUserInformation/?uid="+user,function(data){
