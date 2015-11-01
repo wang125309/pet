@@ -14,6 +14,28 @@ include ./lib/header.jade
     link(href="/static/css/index.css",rel="stylesheet",type="text/css")
     body
         //audio#audio(src="/static/image/background.mp3",loop="loop")
+        div.share-background=""
+        section.share
+            div.background=""
+            div.border-box
+                div.title-share=""
+                div.border-avatar
+                    div.avatar=""
+                div.message
+                    div.message-area                             
+                        div#desc=""
+                div.line
+                    div.left
+                        div.like 点赞投票：
+                            div.star-icon=""
+                            div.count=""
+                    div.right 
+                        div.rank 排名：
+                            div.rank-icon=""
+                            div.count=""
+                div.btn-line
+                    div.go=""
+                    div.share-btn=""
         section.swiper-container
             section.swiper-wrapper
                 section.swiper-slide(class="page page1")
@@ -54,16 +76,21 @@ include ./lib/header.jade
                                     input#name(type="text",placeholder="请输入你的姓名",name="name")
                                 div.line-second
                                     input#mobile(type="text",placeholder="请输入你的手机号（确保真实有效）",name="mobile")
+                                    input#date(type="hidden",value="",name="date")
                                 div.message-area
                                     textarea#desc(placeholder="写出你参加活动的理由",name="desc")
                                 div.submit=""
                                 div.main=""
-                section.swiper-slide(class="page page6")
-                    div.background=""
-                    div.music.music-play=""
-                    div.title=""
-                    div.main=""
-                    div.up=""
     script(language="javascript",src="/static/js/index.min.js")
     script(language="javascript",src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js")
 
+    script.
+        !(function() {
+            var rem;
+            rem = function() {
+                document.documentElement.style.fontSize = (document.documentElement.clientWidth || document.documentElement.clientWidth) + 'px';
+            };
+            rem();
+            window.addEventListener('resize', rem, false);
+            var _hmt = _hmt || []
+        })();

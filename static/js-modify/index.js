@@ -3,14 +3,55 @@ require("../../bower_components/zeptojs/src/touch.js");
 require("../../bower_components/velocity/velocity.min.js");
 require("../../bower_components/swiper/dist/js/swiper.min.js");
 require("../js/share.min.js");
-
+require("./getParams.js");
 window.onload = function(){
     var isself = 0;
-    
-    if(!localStorage['date']) {
-        isself = 1;
-        localStorage['date'] = new Date();
+    user = getQueryParams("userId");
+    if (user && !localStorage['like']) {
+        $(".share .title-share").show();
+        $.get("/pet/getUserInformation/?uid="+user,function(data){
+            $(".share .border-avatar .avatar").css({"background-image":"url('"+data.avatar+"')"});
+            $(".share #desc").html(data.desc);
+            $(".share .like .count").html(data.like);
+            $(".share .rank .count").html(data.rank);
+            $(".share").show();
+        });
     }
+    else {
+        $(".swiper-container").show();
+    }
+    $(".like").on("tap",function(){
+        flag = false;
+        if (localStorage['like']) {
+            likes = localStorage['like'].split(",");
+        }
+        else {
+            likes = [];
+        }
+        for (i in likes){
+            if(likes[i] == user) {
+                flag = true;
+                break;
+            }
+        }
+        if(!flag) {
+                $.get("/pet/like/?uid="+user,function(data){
+                    $(".share .like .count").html(data.like);
+                    if(localStorage['like']) {
+                        localStorage['like'] += ','+user;
+                    }
+                    else {
+                        localStorage['like'] = "";
+                        localStorage['like'] += user;
+                    }
+                });
+        }
+        else {
+            alert("您已经投过票了");
+        }
+    });
+    
+
     if(isself) {
 
     }
@@ -79,19 +120,48 @@ window.onload = function(){
         }
     });
     $(".page5 .submit").on('tap',function(){
-        var formdata = new FormData($("#form")[0]);
-        $.ajax({
-            type : "POST",
-            url : "/pet/submit/",
-            data : formdata,
-            processData : false,
-            contentType : false,
-            success : function(data) {
-                console.log(data);   
+        if(!localStorage['date']) {
+            if($("#name").val().length > 0 && $("#mobile").val().length == 11) {
+                localStorage['date'] = Date.parse(new Date()) + Math.random() * 1000;
+                $("#date").val(localStorage['date']);
+                var formdata = new FormData($("#form")[0]);
+                $.ajax({
+                    type : "POST",
+                    url : "/pet/submit/",
+                    data : formdata,
+                    processData : false,
+                    contentType : false,
+                    success : function(data) {
+                        $.get("/pet/getUserInformation/?date="+localStorage['date'],function(data){
+                            $(".share .border-avatar .avatar").css({"background-image":"url('"+data.avatar+"')"});
+                            $(".share #desc").html(data.desc);
+                            $(".share .like .count").html(data.like);
+                            $(".share .rank .count").html(data.rank);
+                        });
+                        $(".share").show();
+                    }
+                });
             }
-        }) 
+            else {
+                alert("名字是必填项，手机号要保证11位哦");
+            }
+        }
+        else {
+            alert('您已经参加过活动了');
+        }
     });
-    
+    $(".go").on('tap',function(){
+        $(".share").css({
+            "display":"none"
+        });
+        $(".swiper-container").show();
+    });
+    $(".share-btn").on('tap',function(){
+        $(".share-background").show(); 
+    });
+    $(".share-background").on('tap',function(){
+        $(".share-background").css("display","none");    
+    });
     var formShow = function() {
         $(".page9 .form").show();
         n = Math.ceil(( Math.random() * 9 + 1 ) % 8 + 1 );
@@ -122,9 +192,15 @@ window.onload = function(){
             }
             else if(swiper.activeIndex == 4) {
                 clearAnimation(page5Show);
-            }
-            else if(swiper.activeIndex == 5) {
-                clearAnimation(page6Show);
+                if(localStorage['date']) {
+                    $(".share").show();
+                    $.get("/pet/getUserInformation/?date="+localStorage['date'],function(data){
+                        $(".share .border-avatar .avatar").css({"background-image":"url('"+data.avatar+"')"});
+                        $(".share #desc").html(data.desc);
+                        $(".share .like .count").html(data.like);
+                        $(".share .rank .count").html(data.rank);
+                    });
+                }
             }
         }
     });

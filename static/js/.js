@@ -1784,14 +1784,55 @@ require("../../bower_components/zeptojs/src/touch.js");
 require("../../bower_components/velocity/velocity.min.js");
 require("../../bower_components/swiper/dist/js/swiper.min.js");
 require("../js/share.min.js");
-
+require("./getParams.js");
 window.onload = function(){
     var isself = 0;
-    
-    if(!localStorage['date']) {
-        isself = 1;
-        localStorage['date'] = new Date();
+    user = getQueryParams("userId");
+    if (user && !localStorage['like']) {
+        $(".share .title-share").show();
+        $.get("/pet/getUserInformation/?uid="+user,function(data){
+            $(".share .border-avatar .avatar").css({"background-image":"url('"+data.avatar+"')"});
+            $(".share #desc").html(data.desc);
+            $(".share .like .count").html(data.like);
+            $(".share .rank .count").html(data.rank);
+            $(".share").show();
+        });
     }
+    else {
+        $(".swiper-container").show();
+    }
+    $(".like").on("tap",function(){
+        flag = false;
+        if (localStorage['like']) {
+            likes = localStorage['like'].split(",");
+        }
+        else {
+            likes = [];
+        }
+        for (i in likes){
+            if(likes[i] == user) {
+                flag = true;
+                break;
+            }
+        }
+        if(!flag) {
+                $.get("/pet/like/?uid="+user,function(data){
+                    $(".share .like .count").html(data.like);
+                    if(localStorage['like']) {
+                        localStorage['like'] += ','+user;
+                    }
+                    else {
+                        localStorage['like'] = "";
+                        localStorage['like'] += user;
+                    }
+                });
+        }
+        else {
+            alert("您已经投过票了");
+        }
+    });
+    
+
     if(isself) {
 
     }
@@ -1860,19 +1901,48 @@ window.onload = function(){
         }
     });
     $(".page5 .submit").on('tap',function(){
-        var formdata = new FormData($("#form")[0]);
-        $.ajax({
-            type : "POST",
-            url : "/pet/submit/",
-            data : formdata,
-            processData : false,
-            contentType : false,
-            success : function(data) {
-                console.log(data);   
+        if(!localStorage['date']) {
+            if($("#name").val().length > 0 && $("#mobile").val().length == 11) {
+                localStorage['date'] = Date.parse(new Date()) + Math.random() * 1000;
+                $("#date").val(localStorage['date']);
+                var formdata = new FormData($("#form")[0]);
+                $.ajax({
+                    type : "POST",
+                    url : "/pet/submit/",
+                    data : formdata,
+                    processData : false,
+                    contentType : false,
+                    success : function(data) {
+                        $.get("/pet/getUserInformation/?date="+localStorage['date'],function(data){
+                            $(".share .border-avatar .avatar").css({"background-image":"url('"+data.avatar+"')"});
+                            $(".share #desc").html(data.desc);
+                            $(".share .like .count").html(data.like);
+                            $(".share .rank .count").html(data.rank);
+                        });
+                        $(".share").show();
+                    }
+                });
             }
-        }) 
+            else {
+                alert("名字是必填项，手机号要保证11位哦");
+            }
+        }
+        else {
+            alert('您已经参加过活动了');
+        }
     });
-    
+    $(".go").on('tap',function(){
+        $(".share").css({
+            "display":"none"
+        });
+        $(".swiper-container").show();
+    });
+    $(".share-btn").on('tap',function(){
+        $(".share-background").show(); 
+    });
+    $(".share-background").on('tap',function(){
+        $(".share-background").css("display","none");    
+    });
     var formShow = function() {
         $(".page9 .form").show();
         n = Math.ceil(( Math.random() * 9 + 1 ) % 8 + 1 );
@@ -1903,14 +1973,30 @@ window.onload = function(){
             }
             else if(swiper.activeIndex == 4) {
                 clearAnimation(page5Show);
-            }
-            else if(swiper.activeIndex == 5) {
-                clearAnimation(page6Show);
+                if(localStorage['date']) {
+                    $(".share").show();
+                    $.get("/pet/getUserInformation/?date="+localStorage['date'],function(data){
+                        $(".share .border-avatar .avatar").css({"background-image":"url('"+data.avatar+"')"});
+                        $(".share #desc").html(data.desc);
+                        $(".share .like .count").html(data.like);
+                        $(".share .rank .count").html(data.rank);
+                    });
+                }
             }
         }
     });
 }
 
-},{"../../bower_components/swiper/dist/js/swiper.min.js":1,"../../bower_components/velocity/velocity.min.js":2,"../../bower_components/zepto/zepto.js":3,"../../bower_components/zeptojs/src/touch.js":4,"../js/share.min.js":6}],6:[function(require,module,exports){
+},{"../../bower_components/swiper/dist/js/swiper.min.js":1,"../../bower_components/velocity/velocity.min.js":2,"../../bower_components/zepto/zepto.js":3,"../../bower_components/zeptojs/src/touch.js":4,"../js/share.min.js":7,"./getParams.js":6}],6:[function(require,module,exports){
+window.getQueryParams = function(name,url) {                                         
+    if (!url) url = location.href;
+    name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
+    var regexS = "[\\?&]"+name+"=([^&#]*)";
+    var regex = new RegExp( regexS  );
+    var results = regex.exec( url  );
+    return results == null ? null : results[1];
+};
+
+},{}],7:[function(require,module,exports){
 !function t(e,n,i){function o(a,l){if(!n[a]){if(!e[a]){var c="function"==typeof require&&require;if(!l&&c)return c(a,!0);if(r)return r(a,!0);throw new Error("Cannot find module '"+a+"'")}var f=n[a]={exports:{}};e[a][0].call(f.exports,function(t){var n=e[a][1][t];return o(n?n:t)},f,f.exports,t,e,n,i)}return n[a].exports}for(var r="function"==typeof require&&require,a=0;a<i.length;a++)o(i[a]);return o}({1:[function(){$(function(){$.post("/wx/portal/wxconfig/",{url:location.href},function(t){wx.config(t),wx.ready(function(){wx.onMenuShareTimeline({link:"http://football.qingdianer.com",imgUrl:"http://football.qingdianer.com/static/image/share-image.jpg",title:"呐喊吧！为国足加油！",desc:"喊出你的最强者，为中国队空中加油！更有足球装备等你来赢！不吝铁肺，放胆来试！"}),wx.onMenuShareAppMessage({link:"http://football.qingdianer.com",imgUrl:"http://football.qingdianer.com/static/image/share-image.jpg",title:"呐喊吧！为国足加油！",desc:"喊出你的最强者，为中国队空中加油！更有足球装备等你来赢！不吝铁肺，放胆来试！"})}),wx.error(function(){$.get("/wx/portal/update_access_token/",function(){$.post("/wx/portal/wxconfig/",{url:location.href},function(t){wx.config(t),wx.ready(function(){wx.onMenuShareTimeline({link:"http://football.qingdianer.com",imgUrl:"http://football.qingdianer.com/static/image/share-image.jpg",title:"呐喊吧！为国足加油！",desc:"喊出你的最强者，为中国队空中加油！更有足球装备等你来赢！不吝铁肺，放胆来试！"}),wx.onMenuShareAppMessage({link:"http://football.qingdianer.com",imgUrl:"http://football.qingdianer.com/static/image/share-image.jpg",title:"呐喊吧！为国足加油！",desc:"喊出你的最强者，为中国队空中加油！更有足球装备等你来赢！不吝铁肺，放胆来试！"})})})})})})})},{}]},{},[1]);
 },{}]},{},[5])
