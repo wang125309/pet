@@ -23,6 +23,7 @@ window.onload = function(){
             }
         }
         if(!flag) {
+            if(user) {
                 $.get("/pet/like/?uid="+user,function(data){
                     $(".share .like .count").html(data.like);
                     if(localStorage['like']) {
@@ -33,6 +34,19 @@ window.onload = function(){
                         localStorage['like'] += user;
                     }
                 });
+            }
+            else {
+                $.get("/pet/like/?date="+localStorage['date'],function(data){
+                    $(".share .like .count").html(data.like);
+                    if(localStorage['like']) {
+                        localStorage['like'] += ','+user;
+                    }
+                    else {
+                        localStorage['like'] = "";
+                        localStorage['like'] += user;
+                    }
+                });
+            }
         }
         else {
             alert("您已经投过票了");
@@ -186,7 +200,6 @@ window.onload = function(){
     };
     $(".page4 .submit").on('tap',function(){
         swiper.slideTo(4);
-
     });
     if (user && !localStorage['like']) {
         $(".share .title-share").show();
@@ -200,38 +213,38 @@ window.onload = function(){
     }
     else {
         $(".swiper-container").show();
-    var swiper = new Swiper('.swiper-container', {
-        direction:'vertical',
-        speed:500,
-        onInit: function() {
-            clearAnimation(page1Show);
-        },
-        onSlideChangeEnd: function(swiper){
-            if(swiper.activeIndex == 0) {
+        var swiper = new Swiper('.swiper-container', {
+            direction:'vertical',
+            speed:500,
+            onInit: function() {
                 clearAnimation(page1Show);
-            }
-            else if(swiper.activeIndex == 1) {
-                clearAnimation(page2Show);
-            }
-            else if(swiper.activeIndex == 2) {
-                clearAnimation(page3Show);
-            }
-            else if(swiper.activeIndex == 3) {
-                clearAnimation(page4Show);
-            }
-            else if(swiper.activeIndex == 4) {
-                clearAnimation(page5Show);
-                if(localStorage['date']) {
-                    $(".share").show();
-                    $.get("/pet/getUserInformation/?date="+localStorage['date'],function(data){
-                        $(".share .border-avatar .avatar").css({"background-image":"url('"+data.avatar+"')"});
-                        $(".share #desc").html(data.desc);
-                        $(".share .like .count").html(data.like);
-                        $(".share .rank .count").html(data.rank);
-                    });
+            },
+            onSlideChangeEnd: function(swiper){
+                if(swiper.activeIndex == 0) {
+                    clearAnimation(page1Show);
+                }
+                else if(swiper.activeIndex == 1) {
+                    clearAnimation(page2Show);
+                }
+                else if(swiper.activeIndex == 2) {
+                    clearAnimation(page3Show);
+                }
+                else if(swiper.activeIndex == 3) {
+                    clearAnimation(page4Show);
+                }
+                else if(swiper.activeIndex == 4) {
+                    clearAnimation(page5Show);
+                    if(localStorage['date']) {
+                        $(".share").show();
+                        $.get("/pet/getUserInformation/?date="+localStorage['date'],function(data){
+                            $(".share .border-avatar .avatar").css({"background-image":"url('"+data.avatar+"')"});
+                            $(".share #desc").html(data.desc);
+                            $(".share .like .count").html(data.like);
+                            $(".share .rank .count").html(data.rank);
+                        });
+                    }
                 }
             }
-        }
-    });
+        });
     }
 }
