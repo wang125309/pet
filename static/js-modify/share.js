@@ -1,5 +1,5 @@
 $(function(){
-    $.post("/wx/portal/wxconfig/",{
+    $.post("/portal/wxconfig/",{
 		"url":location.href
 	},function(data){
 		wx.config(data);
