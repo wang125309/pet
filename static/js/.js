@@ -1798,9 +1798,17 @@ window.onload = function(){
             likes = [];
         }
         for (i in likes){
-            if(likes[i] == user) {
-                flag = true;
-                break;
+            if(user) {
+                if(likes[i] == user) {
+                    flag = true;
+                    break;
+                }
+            }
+            else {
+                if(likes[i] == 'me') {
+                    flag = true;
+                    break;
+                }
             }
         }
         if(!flag) {
@@ -1820,11 +1828,11 @@ window.onload = function(){
                 $.get("/pet/like/?date="+localStorage['date'],function(data){
                     $(".share .like .count").html(data.like);
                     if(localStorage['like']) {
-                        localStorage['like'] += ','+user;
+                        localStorage['like'] += ',me';
                     }
                     else {
                         localStorage['like'] = "";
-                        localStorage['like'] += user;
+                        localStorage['like'] += 'me';
                     }
                 });
             }
