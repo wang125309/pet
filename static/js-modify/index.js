@@ -139,6 +139,7 @@ window.onload = function(){
                             $(".share #desc").html(data.desc);
                             $(".share .like .count").html(data.like);
                             $(".share .rank .count").html(data.rank);
+                            window.shareUserId = data.id;
                         });
                         $(".share").show();
                     }
