@@ -1847,9 +1847,9 @@ window.onload = function(){
         return false;
     });
     on = false;
-    //$("#audio").attr({"src":"/static/image/background.mp3"});
-    //$("#audio")[0].play();
-    /*$(".music").on("click",function(){
+    $("#audio").attr({"src":"/static/image/background.mp3"});
+    $("#audio")[0].play();
+    $(".music").on("click",function(){
         if(on) {
             on = false;
             document.getElementById("audio").pause();
@@ -1860,7 +1860,7 @@ window.onload = function(){
             document.getElementById("audio").play();
             $(".music").addClass("music-play");
         }
-    });*/
+    });
     var clearAnimation = function(fun) {
         $(".title").hide();
         $(".sound").hide();
@@ -2050,5 +2050,5 @@ window.getQueryParams = function(name,url) {
 };
 
 },{}],7:[function(require,module,exports){
-!function t(e,n,i){function o(a,l){if(!n[a]){if(!e[a]){var c="function"==typeof require&&require;if(!l&&c)return c(a,!0);if(r)return r(a,!0);throw new Error("Cannot find module '"+a+"'")}var f=n[a]={exports:{}};e[a][0].call(f.exports,function(t){var n=e[a][1][t];return o(n?n:t)},f,f.exports,t,e,n,i)}return n[a].exports}for(var r="function"==typeof require&&require,a=0;a<i.length;a++)o(i[a]);return o}({1:[function(){$(function(){$.post("/portal/wxconfig/",{url:location.href},function(t){wx.config(t),wx.ready(function(){wx.onMenuShareTimeline({link:"http://football.qingdianer.com",imgUrl:"http://football.qingdianer.com/static/image/share-image.jpg",title:"呐喊吧！为国足加油！",desc:"喊出你的最强者，为中国队空中加油！更有足球装备等你来赢！不吝铁肺，放胆来试！"}),wx.onMenuShareAppMessage({link:"http://football.qingdianer.com",imgUrl:"http://football.qingdianer.com/static/image/share-image.jpg",title:"呐喊吧！为国足加油！",desc:"喊出你的最强者，为中国队空中加油！更有足球装备等你来赢！不吝铁肺，放胆来试！"})}),wx.error(function(){$.get("/wx/portal/update_access_token/",function(){$.post("/wx/portal/wxconfig/",{url:location.href},function(t){wx.config(t),wx.ready(function(){wx.onMenuShareTimeline({link:"http://football.qingdianer.com",imgUrl:"http://football.qingdianer.com/static/image/share-image.jpg",title:"呐喊吧！为国足加油！",desc:"喊出你的最强者，为中国队空中加油！更有足球装备等你来赢！不吝铁肺，放胆来试！"}),wx.onMenuShareAppMessage({link:"http://football.qingdianer.com",imgUrl:"http://football.qingdianer.com/static/image/share-image.jpg",title:"呐喊吧！为国足加油！",desc:"喊出你的最强者，为中国队空中加油！更有足球装备等你来赢！不吝铁肺，放胆来试！"})})})})})})})},{}]},{},[1]);
+!function e(n,r,o){function t(u,a){if(!r[u]){if(!n[u]){var f="function"==typeof require&&require;if(!a&&f)return f(u,!0);if(i)return i(u,!0);throw new Error("Cannot find module '"+u+"'")}var c=r[u]={exports:{}};n[u][0].call(c.exports,function(e){var r=n[u][1][e];return t(r?r:e)},c,c.exports,e,n,r,o)}return r[u].exports}for(var i="function"==typeof require&&require,u=0;u<o.length;u++)t(o[u]);return t}({1:[function(){$(function(){$.post("/portal/wxconfig/",{url:location.href},function(e){wx.config(e);var n={link:"/?userId="+window.shareUserId,imgUrl:"/static/image/share-image.jpg",title:"逃离双11的最佳方式：领养一只拉布拉多宝宝",desc:"逃离双11的最佳方式：领养一只拉布拉多宝宝"};wx.ready(function(){wx.onMenuShareTimeline(n),wx.onMenuShareAppMessage(sharejson)}),wx.error(function(){$.get("/portal/update_access_token/",function(){$.post("/portal/wxconfig/",{url:location.href},function(e){wx.config(e),wx.ready(function(){wx.onMenuShareTimeline(n),wx.onMenuShareAppMessage(n)})})})})})})},{}]},{},[1]);
 },{}]},{},[5])

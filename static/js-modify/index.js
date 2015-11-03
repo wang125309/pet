@@ -66,9 +66,9 @@ window.onload = function(){
         return false;
     });
     on = false;
-    //$("#audio").attr({"src":"/static/image/background.mp3"});
-    //$("#audio")[0].play();
-    /*$(".music").on("click",function(){
+    $("#audio").attr({"src":"/static/image/background.mp3"});
+    $("#audio")[0].play();
+    $(".music").on("click",function(){
         if(on) {
             on = false;
             document.getElementById("audio").pause();
@@ -79,7 +79,7 @@ window.onload = function(){
             document.getElementById("audio").play();
             $(".music").addClass("music-play");
         }
-    });*/
+    });
     var clearAnimation = function(fun) {
         $(".title").hide();
         $(".sound").hide();
