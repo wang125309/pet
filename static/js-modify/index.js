@@ -65,10 +65,10 @@ window.onload = function(){
     $(document).on("touchmove",function(){
         return false;
     });
-    on = false;
+    var on = false;
     $("#audio").attr({"src":"/static/image/background.mp3"});
     $("#audio")[0].play();
-    $(".music").on("click",function(){
+    $(".music").on("tap",function(){
         if(on) {
             on = false;
             document.getElementById("audio").pause();
