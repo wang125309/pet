@@ -1904,7 +1904,7 @@ window.onload = function(){
     });
     $(".page5 .submit").on('tap',function(){
         if(!localStorage['date']) {
-            if($("#name").val().length > 0 && $("#mobile").val().length == 11) {
+            if($("#name").val().length > 0 && $("#mobile").val().length == 11 && $("#file").val().length) {
                 localStorage['date'] = Date.parse(new Date()) + Math.random() * 1000;
                 $("#date").val(localStorage['date']);
                 var formdata = new FormData($("#form")[0]);
@@ -1927,7 +1927,7 @@ window.onload = function(){
                 });
             }
             else {
-                alert("名字是必填项，手机号要保证11位哦");
+                alert("名字是必填项，手机号要保证11位哦，您还要上传您的照片哦");
             }
         }
         else {
