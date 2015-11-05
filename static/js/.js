@@ -1902,6 +1902,7 @@ window.onload = function(){
             });
         }
     });
+    window.shareUserId = '';
     $(".page5 .submit").on('tap',function(){
         if(!localStorage['date']) {
             if($("#name").val().length > 0 && $("#mobile").val().length == 11 && $("#file").val().length) {
@@ -2050,5 +2051,5 @@ window.getQueryParams = function(name,url) {
 };
 
 },{}],7:[function(require,module,exports){
-!function e(n,r,o){function t(u,a){if(!r[u]){if(!n[u]){var f="function"==typeof require&&require;if(!a&&f)return f(u,!0);if(i)return i(u,!0);throw new Error("Cannot find module '"+u+"'")}var c=r[u]={exports:{}};n[u][0].call(c.exports,function(e){var r=n[u][1][e];return t(r?r:e)},c,c.exports,e,n,r,o)}return r[u].exports}for(var i="function"==typeof require&&require,u=0;u<o.length;u++)t(o[u]);return t}({1:[function(){$(function(){$.post("/portal/wxconfig/",{url:location.href},function(e){wx.config(e);var n={link:"/?userId="+window.shareUserId,imgUrl:"/static/image/share-image.jpg",title:"逃离双11的最佳方式：领养一只拉布拉多宝宝",desc:"逃离双11的最佳方式：领养一只拉布拉多宝宝"};wx.ready(function(){wx.onMenuShareTimeline(n),wx.onMenuShareAppMessage(sharejson)}),wx.error(function(){$.get("/portal/update_access_token/",function(){$.post("/portal/wxconfig/",{url:location.href},function(e){wx.config(e),wx.ready(function(){wx.onMenuShareTimeline(n),wx.onMenuShareAppMessage(n)})})})})})})},{}]},{},[1]);
+!function n(e,r,o){function t(u,a){if(!r[u]){if(!e[u]){var f="function"==typeof require&&require;if(!a&&f)return f(u,!0);if(i)return i(u,!0);throw new Error("Cannot find module '"+u+"'")}var c=r[u]={exports:{}};e[u][0].call(c.exports,function(n){var r=e[u][1][n];return t(r?r:n)},c,c.exports,n,e,r,o)}return r[u].exports}for(var i="function"==typeof require&&require,u=0;u<o.length;u++)t(o[u]);return t}({1:[function(){$(function(){$.post("/portal/wxconfig/",{url:location.href},function(n){wx.config(n);var e={link:"http://11.yanyr.com/?userId="+window.shareUserId,imgUrl:"http://11.yanyr.com/static/image/share-image.jpg",title:"逃离双11的最佳方式：领养一只拉布拉多宝宝",desc:"逃离双11的最佳方式：领养一只拉布拉多宝宝"};wx.ready(function(){wx.onMenuShareTimeline(e),wx.onMenuShareAppMessage(e)}),wx.error(function(){$.get("/portal/update_access_token/",function(){$.post("/portal/wxconfig/",{url:location.href},function(n){wx.config(n),wx.ready(function(){wx.onMenuShareTimeline(e),wx.onMenuShareAppMessage(e)})})})})})})},{}]},{},[1]);
 },{}]},{},[5])

@@ -121,6 +121,7 @@ window.onload = function(){
             });
         }
     });
+    window.shareUserId = '';
     $(".page5 .submit").on('tap',function(){
         if(!localStorage['date']) {
             if($("#name").val().length > 0 && $("#mobile").val().length == 11 && $("#file").val().length) {

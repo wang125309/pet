@@ -5,7 +5,7 @@ $(function(){
 		wx.config(data);
         
         var shareJson = {
-            link:"http://11.yanyr.com/?userId="+window.shareUserId,
+            link:"http://11.yanyr.com?userId="+window.shareUserId,
             imgUrl:"http://11.yanyr.com/static/image/share-image.jpg",
             title:"逃离双11的最佳方式：领养一只拉布拉多宝宝",
             desc:"逃离双11的最佳方式：领养一只拉布拉多宝宝"
