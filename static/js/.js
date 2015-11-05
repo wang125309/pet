@@ -1903,7 +1903,7 @@ window.onload = function(){
         }
     });
     if(localStorage['date']) {
-        $("/pet/getUserInformation/?date="+localStorage['date'],function(data){
+        $.get("/pet/getUserInformation/?date="+localStorage['date'],function(data){
             window.shareUserId = data.id;
                             $.post("/portal/wxconfig/",{
                                 "url":location.href
