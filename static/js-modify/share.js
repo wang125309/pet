@@ -5,14 +5,14 @@ $(function(){
 		wx.config(data);
         
         var shareJson = {
-            link:"/?userId="+window.shareUserId,
-            imgUrl:"/static/image/share-image.jpg",
+            link:"http://11.yanyr.com/?userId="+window.shareUserId,
+            imgUrl:"http://11.yanyr.com/static/image/share-image.jpg",
             title:"逃离双11的最佳方式：领养一只拉布拉多宝宝",
             desc:"逃离双11的最佳方式：领养一只拉布拉多宝宝"
         };
 		wx.ready(function(){
 			wx.onMenuShareTimeline(shareJson);
-			wx.onMenuShareAppMessage(sharejson);
+			wx.onMenuShareAppMessage(shareJson);
         });
 		wx.error(function(res){
 			$.get("/portal/update_access_token/",function(data){
