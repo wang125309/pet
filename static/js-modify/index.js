@@ -122,6 +122,8 @@ window.onload = function(){
         }
     });
     if(localStorage['date']) {
+        $("/pet/getUserInformation/?date="+localStorage['date'],function(data){
+            window.shareUserId = data.id;
                             $.post("/portal/wxconfig/",{
                                 "url":location.href
                             },function(data){
@@ -156,6 +158,8 @@ window.onload = function(){
                                     });
                                 });
                             });
+        });
+
     }
     window.shareUserId = '';
     $(".page5 .submit").on('tap',function(){
