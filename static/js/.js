@@ -2026,7 +2026,7 @@ window.onload = function(){
     $(".page4 .submit").on('tap',function(){
         swiper.slideTo(4);
     });
-    if (user && !localStorage['like']) {
+    if (user) {
         $(".share .title-share").show();
         $.get("/pet/getUserInformation/?uid="+user,function(data){
             $(".share .border-avatar .avatar").css({"background-image":"url('"+data.avatar+"')"});
