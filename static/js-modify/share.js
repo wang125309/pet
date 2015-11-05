@@ -3,9 +3,14 @@ $(function(){
 		"url":location.href
 	},function(data){
 		wx.config(data);
-        
+        if(window.shareUserId != undefined) {
+            link = "http://11.yanyr.com?userId="+window.shareUserId;
+        }
+        else {
+            link = "http://11.yanyr.com";
+        }
         var shareJson = {
-            link:"http://11.yanyr.com?userId="+window.shareUserId,
+            link:link,
             imgUrl:"http://11.yanyr.com/static/image/share-image.jpg",
             title:"逃离双11的最佳方式：领养一只拉布拉多宝宝",
             desc:"逃离双11的最佳方式：领养一只拉布拉多宝宝"
