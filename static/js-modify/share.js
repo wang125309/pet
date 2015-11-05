@@ -12,8 +12,8 @@ $(function(){
         var shareJson = {
             link:link,
             imgUrl:"http://11.yanyr.com/static/image/share-image.jpg",
-            title:"逃离双11的最佳方式：领养一只拉布拉多宝宝",
-            desc:"逃离双11的最佳方式：领养一只拉布拉多宝宝"
+            title:"逃离“双十一”的最佳方式:送你一只拉布拉多宝宝",
+            desc:"逃离“双十一”的最佳方式:送你一只拉布拉多宝宝宝"
         };
 		wx.ready(function(){
 			wx.onMenuShareTimeline(shareJson);
