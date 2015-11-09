@@ -223,6 +223,9 @@ window.onload = function(){
                             $(".share").show();
 
                         }
+                        else {
+                            alert(data.reason);
+                        }
                     },
                     error: function() {
                         alert("后台异常");
