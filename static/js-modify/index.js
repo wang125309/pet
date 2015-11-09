@@ -123,7 +123,7 @@ window.onload = function(){
     });
     if(localStorage['date']) {
         $.get("/pet/getUserInformation/?date="+localStorage['date'],function(data){
-            if(!data.id) {
+            if(!data.desc) {
                 localStorage['date'] = '';
             }
             window.shareUserId = data.id;
