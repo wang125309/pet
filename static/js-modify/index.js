@@ -123,9 +123,7 @@ window.onload = function(){
     });
     if(localStorage['date']) {
         $.get("/pet/getUserInformation/?date="+localStorage['date'],function(data){
-            if(!data.desc) {
-                localStorage['date'] = '';
-            }
+            console.log(data);
             window.shareUserId = data.id;
                             $.post("/portal/wxconfig/",{
                                 "url":location.href
