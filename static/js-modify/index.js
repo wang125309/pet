@@ -123,6 +123,9 @@ window.onload = function(){
     });
     if(localStorage['date']) {
         $.get("/pet/getUserInformation/?date="+localStorage['date'],function(data){
+            if(!data.id) {
+                localStorage['date'] = '';
+            }
             window.shareUserId = data.id;
                             $.post("/portal/wxconfig/",{
                                 "url":location.href
@@ -175,6 +178,7 @@ window.onload = function(){
                     processData : false,
                     contentType : false,
                     success : function(data) {
+                        if(data.status == 'success') {
                         $.get("/pet/getUserInformation/?date="+localStorage['date'],function(data){
                             $(".share .border-avatar .avatar").css({"background-image":"url('"+data.avatar+"')"});
                             $(".share #desc").html(data.desc);
@@ -217,8 +221,11 @@ window.onload = function(){
                             });
                         });
                         $(".share").show();
+
+                    }
                     }
                 });
+
             }
             else {
                 alert("名字是必填项，手机号要保证11位哦，您还要上传您的照片哦");

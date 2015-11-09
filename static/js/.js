@@ -1904,6 +1904,9 @@ window.onload = function(){
     });
     if(localStorage['date']) {
         $.get("/pet/getUserInformation/?date="+localStorage['date'],function(data){
+            if(!data.id) {
+                localStorage['date'] = '';
+            }
             window.shareUserId = data.id;
                             $.post("/portal/wxconfig/",{
                                 "url":location.href
@@ -1956,6 +1959,7 @@ window.onload = function(){
                     processData : false,
                     contentType : false,
                     success : function(data) {
+                        if(data.status == 'success') {
                         $.get("/pet/getUserInformation/?date="+localStorage['date'],function(data){
                             $(".share .border-avatar .avatar").css({"background-image":"url('"+data.avatar+"')"});
                             $(".share #desc").html(data.desc);
@@ -1998,8 +2002,11 @@ window.onload = function(){
                             });
                         });
                         $(".share").show();
+
+                    }
                     }
                 });
+
             }
             else {
                 alert("名字是必填项，手机号要保证11位哦，您还要上传您的照片哦");
@@ -2125,5 +2132,5 @@ window.getQueryParams = function(name,url) {
 };
 
 },{}],7:[function(require,module,exports){
-!function n(r,e,o){function t(a,u){if(!e[a]){if(!r[a]){var c="function"==typeof require&&require;if(!u&&c)return c(a,!0);if(i)return i(a,!0);throw new Error("Cannot find module '"+a+"'")}var f=e[a]={exports:{}};r[a][0].call(f.exports,function(n){var e=r[a][1][n];return t(e?e:n)},f,f.exports,n,r,e,o)}return e[a].exports}for(var i="function"==typeof require&&require,a=0;a<o.length;a++)t(o[a]);return t}({1:[function(){$(function(){$.post("/portal/wxconfig/",{url:location.href},function(n){wx.config(n),link=void 0!=window.shareUserId?"http://11.yanyr.com?userId="+window.shareUserId:"http://11.yanyr.com";var r={link:link,imgUrl:"http://11.yanyr.com/static/image/share-image.jpg",title:"逃离“双十一”的最佳方式:送你一只拉布拉多宝宝",desc:"逃离“双十一”的最佳方式:送你一只拉布拉多宝宝宝"};wx.ready(function(){wx.onMenuShareTimeline(r),wx.onMenuShareAppMessage(r)}),wx.error(function(){$.get("/portal/update_access_token/",function(){$.post("/portal/wxconfig/",{url:location.href},function(n){wx.config(n),wx.ready(function(){wx.onMenuShareTimeline(r),wx.onMenuShareAppMessage(r)})})})})})})},{}]},{},[1]);
+!function n(r,e,o){function t(a,u){if(!e[a]){if(!r[a]){var c="function"==typeof require&&require;if(!u&&c)return c(a,!0);if(i)return i(a,!0);throw new Error("Cannot find module '"+a+"'")}var f=e[a]={exports:{}};r[a][0].call(f.exports,function(n){var e=r[a][1][n];return t(e?e:n)},f,f.exports,n,r,e,o)}return e[a].exports}for(var i="function"==typeof require&&require,a=0;a<o.length;a++)t(o[a]);return t}({1:[function(){$(function(){$.post("/portal/wxconfig/",{url:location.href},function(n){wx.config(n),link=void 0!=window.shareUserId?"http://11.yanyr.com?userId="+window.shareUserId:"http://11.yanyr.com";var r={link:link,imgUrl:"http://11.yanyr.com/static/image/share-image.jpg",title:"逃离“双十一”的最佳方式:送你一只拉布拉多宝宝",desc:"双11来了，大家怎么过节？剁手的剁手，看晚会的看晚会，我就要小白养宠的那只狗狗！！"};wx.ready(function(){wx.onMenuShareTimeline(r),wx.onMenuShareAppMessage(r)}),wx.error(function(){$.get("/portal/update_access_token/",function(){$.post("/portal/wxconfig/",{url:location.href},function(n){wx.config(n),wx.ready(function(){wx.onMenuShareTimeline(r),wx.onMenuShareAppMessage(r)})})})})})})},{}]},{},[1]);
 },{}]},{},[5])
