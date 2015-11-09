@@ -2004,6 +2004,9 @@ window.onload = function(){
                             $(".share").show();
 
                         }
+                    },
+                    error: function() {
+                        alert("后台异常");
                     }
                 });
 
