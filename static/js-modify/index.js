@@ -166,6 +166,8 @@ window.onload = function(){
     }
     window.shareUserId = '';
     $(".page5 .submit").on('tap',function(){
+        alert("活动已结束");
+        /*
         if(!localStorage['date']) {
             if($("#name").val().length > 0 && $("#mobile").val().length == 11 && $("#file").val().length) {
                 localStorage['date'] = Date.parse(new Date()) + Math.random() * 1000;
@@ -239,7 +241,7 @@ window.onload = function(){
         }
         else {
             alert('您已经参加过活动了');
-        }
+        }*/
     });
     $(".go").on('tap',function(){
         $(".share").css({
